@@ -1,6 +1,6 @@
 /* eslint-disable func-names, no-underscore-dangle */
 import React from 'react';
-import Chair from './Chair';
+import Seat from './Seat';
 // import ShowSeats from './ShowSeats';
 
 export default (props) => {
@@ -10,7 +10,7 @@ export default (props) => {
     <div>
       <div>Sections - {type}</div>
       {data.map((s) => {
-        return (<Chair id={s._id} purchased={s.purchased} />);
+        return (<Seat id={s._id} purchased={s.purchased} />);
       })}
     </div>
   );

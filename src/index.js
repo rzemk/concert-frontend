@@ -1,8 +1,8 @@
 // import App from './App';
-import Seat from './Seat';
+import Concert from './Concert';
 import React from 'react';
 import { render } from 'react-dom';
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
-render(<div><Seat /> </div>, document.getElementById('root'));
+render(<div><Concert /> </div>, document.getElementById('root'));

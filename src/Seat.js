@@ -1,47 +1,33 @@
 /*eslint-disable func-names */
 import React from 'react';
-import ShowSeats from './ShowSeats'
 
-class Seat extends React.Component {
+class Chair extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { sections: [] };
-    this.submit = this.submit.bind(this);
+    const id = props.id;
+    const purchased = props.purchased;
+    this.state = { id, purchased };
+    this.update = this.update.bind(this);
   }
 
-  componentWillMount() {
-    fetch('//localhost:3333/section/')
-    .then((response) => response.json())
-    .then((data) => {
-      const sections = data.sections;
-      this.setState({ sections });
-    });
-  }
-
-  submit() {
-    const quantity = this.refs.quantity.value;
-    const cost = this.refs.cost.value;
-    const type = this.refs.type.value;
-    fetch('//localhost:3333/section/', { method: 'post', body: JSON.stringify({ quantity, cost, type }), headers: {"Content-Type": "application/json"} })
+  update() {
+    const purchased = !this.state.purchased;
+    const id = this.state.id;
+    fetch('//localhost:3333/seat/', { method: 'post', body: JSON.stringify({ id, purchased }), headers: {"Content-Type": "application/json"} })
     .then((r) => { return r.json(); })
-    .then((data) => {
-      const sections = data.sections;
-      this.setState({ sections });
+    .then(() => {
+      this.setState({ purchased });
     });
   }
 
   render() {
-    return (
-      <div>
-        <div>Seat Component</div>
-        <div>Quantity: <input type="number" ref="quantity" /></div>
-        <div>type: <input type="text" ref="type" /></div>
-        <div>Cost: <input type="number" ref="cost" /></div>
-        <div><button onClick={this.submit} >Submit</button></div>
-        <div><ShowSeats sections={this.state.sections} /></div>
-      </div>
-    );
+    const purchased = this.state.purchased;
+    let bText = 'purchase';
+    if (purchased) {
+      bText = 'sell';
+    }
+    return (<button onClick={this.update} style={{ background: 'lightblue' }}>{bText}</button>);
   }
 }
 
-export default Seat;
+export default Chair;
